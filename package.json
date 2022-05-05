@@ -1,0 +1,24 @@
+{
+  "name": "employee-trakr",
+  "version": "1.0.0",
+  "description": "an application for being able to track your employees with using node, inquirer, and mysql.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mikekuney/Employee-trakr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mikekuney/Employee-trakr/issues"
+  },
+  "homepage": "https://github.com/Mikekuney/Employee-trakr#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
