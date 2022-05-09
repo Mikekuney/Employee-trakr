@@ -279,3 +279,63 @@ async function addEmployee() {
             })
     })
 }
+
+let updateRole = () => {
+    connection.query('SELECT * FROM employee', function (err, result) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                name: 'employeeName',
+                type: 'list',
+                message: 'Which employees role would you like to update?',
+                choices: () => {
+                    employeeArr = [];
+                    result.forEach(result => {
+                        employeeArr.push(
+                            result.last_name
+                        );
+                    })
+                    return employeeArr;
+                }
+            }
+        ])
+            .then(function (answer) {
+                console.log(answer);
+                const name = answer.employeeName;
+                connection.query('SELECT * FROM roles', function (err, res) {
+                    inquirer.prompt([
+                        {
+                            name: 'role',
+                            type: 'list',
+                            message: 'What is the new role?',
+                            choices: () => {
+                                rolesArr = [];
+                                res.forEach(res => {
+                                    rolesArr.push(
+                                        res.title)
+
+                                })
+                                return rolesArr;
+                            }
+                        }
+                    ])
+                        .then(function (answer) {
+                            let roles = rolesAnswer.roles;
+                            console.log(rolesAnswer.roles);
+                            connection.query('SELECT * FROM role WHERE title = ?', [roles], function (err, res) {
+                                if (err) throw err;
+                                let roleId = res[0].id;
+                                let query = 'UPDATE employee SET role_id = ? WHERE last_name = ?';
+                                let values = [roleId, name];
+                                console.log(values);
+                                connection.query(query, values,
+                                    function (err, res, fields) {
+                                        console.log(`You have uodates ${name}'s role to ${roles}.`)
+                                    })
+                                viewEmployees();
+                            })
+                        })
+                })
+            })
+    })
+}
