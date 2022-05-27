@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-let departmentOj = {};
-let departmentNames = [];
+let departmentObj = {};
+let departmentName = [];
 const connection = mysql.createConnection({
     host: 'localhost',
 
@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     user: 'root',
 
     // Your password
-    password: 'root',
+    password: 'DumbAss1!',
     database: 'ETS_db'
 });
 
@@ -66,7 +66,7 @@ const start = () => {
                     break;
 
                 case 'Update an employee role':
-                    updateEmployeeRole();
+                    updateRole();
                     break;
 
                 case 'Exit':
@@ -76,9 +76,9 @@ const start = () => {
 }
 
 let viewDepartments = () => {
-    let query = 'SELECT * FROM department';
+    let query = "SELECT * FROM department";
     connection.query(query, function (err, res) {
-        console.log('Departments')
+        //console.log('Departments')
         res.forEach(department => {
             console.log(`ID: ${department.id} | Name: ${department.dep_names}`)
         });
@@ -87,9 +87,9 @@ let viewDepartments = () => {
 };
 
 let viewRoles = () => {
-    let query = 'SELECT * FROM roles';
+    let query = "SELECT * FROM roles";
     connection.query(query, function (err, res) {
-        console.log('Roles')
+        //console.log('Roles')
         res.forEach(roles => {
             console.log(`ID: ${roles.r_id} | Title: ${roles.title} | Salary: ${roles.salary} | Department ID: ${roles.department_id}`);
         });
@@ -98,9 +98,9 @@ let viewRoles = () => {
 };
 
 let viewEmployees = () => {
-    let query = 'SELECT * FROM employee';
+    let query = "SELECT * FROM employee";
     connection.query(query, function (err, res) {
-        console.log('Employees')
+        //console.log('Employees')
         res.forEach(employee => {
             console.log(`ID: ${employee.emp_id} | Name: ${employee.first_name} ${employee.last_name} | Role ID: ${employee.role_id} | Manager ID: ${employee.manager_id}`);
         })
@@ -114,7 +114,7 @@ let addDepartment = () => {
         type: 'input',
         message: 'What is the name of the department?'
     }).then(function (answer) {
-        let query = 'INSERT INTO department (name) VALUES (?)';
+        let query = "INSERT INTO department (name) VALUES (?)";
         connection.query(query, answer.department, function (err, res) {
             console.log(`${answer.department} added to the database`)
             viewDepartments();
@@ -124,7 +124,7 @@ let addDepartment = () => {
 
 function lookupDepartments() {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM Department', (err, res) => {
+        connection.query("SELECT * FROM Department", (err, res) => {
             if (err) throw err;
 
             // departmentObj={
@@ -181,7 +181,7 @@ let addRole = () => {
             let department_id = res.filter(res => res.dep_names === department)
             console.log('id', department_id[0].id)
 
-            let query = 'INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)';
+            let query = "INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)";
             let values = [answer.title, parseInt(answer.salary), department_id[0].id]
             connection.query(query, values, function (err, res) {
 
@@ -203,7 +203,7 @@ let addRole = () => {
 }
 
 async function addEmployee() {
-    connection.query('SELECT * FROM roles', function (err, res) {
+    connection.query("SELECT * FROM roles", function (err, result) {
         if (err) throw err;
         inquirer.prompt([{
             name: 'firstName',
@@ -222,7 +222,7 @@ async function addEmployee() {
             choices: () => {
                 rolesArray = [];
                 result.forEach(result => {
-                rolesArray.push(
+                    rolesArray.push(
                     result.title
                 );
             })
@@ -233,13 +233,13 @@ async function addEmployee() {
             .then(function (answer) {
                 console.log(answer);
                 const role = answer.roleName;
-                connection.query('SELECT * FROM roles', function (err, res) {
+                connection.query("SELECT * FROM roles", function (err, res) {
                     if (err) throw err;
                     let filteredRole = res.filter(function (res) {
                         return res.title == role;
                     })
                     let roleId = filteredRole[0].id;
-                    connection.query('SELECT * FROM employee', function (err, res) {
+                    connection.query("SELECT * FROM employee", function (err, res) {
                         inquirer.prompt([
                             {
                                 name: 'manager',
@@ -257,14 +257,14 @@ async function addEmployee() {
                         ])
                             .then(function (managerAnswer) {
                                 const manager = managerAnswer;
-                                connection.query('SELECT * FROM employee', function (err, res) {
+                                connection.query("SELECT * FROM employee", function (err, res) {
                                     if (err) throw err;
                                     let filteredManager = res.filter(function (res) {
                                         return res.last_name == manager;
                                     })
                                     let managerId = filteredManager[0].id;
                                     console.log(managerAnswer);
-                                    let query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+                                    let query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)";
                                     let values = [answer.firstName, answer.lastName, roleId, managerId];
                                     console.log(values);
                                     connection.query(query, values,
@@ -281,7 +281,7 @@ async function addEmployee() {
 }
 
 let updateRole = () => {
-    connection.query('SELECT * FROM employee', function (err, result) {
+    connection.query("SELECT * FROM employee", function (err, result) {
         if (err) throw err;
         inquirer.prompt([
             {
@@ -302,7 +302,7 @@ let updateRole = () => {
             .then(function (answer) {
                 console.log(answer);
                 const name = answer.employeeName;
-                connection.query('SELECT * FROM roles', function (err, res) {
+                connection.query("SELECT * FROM roles", function (err, res) {
                     inquirer.prompt([
                         {
                             name: 'role',
@@ -322,7 +322,7 @@ let updateRole = () => {
                         .then(function (answer) {
                             let roles = rolesAnswer.roles;
                             console.log(rolesAnswer.roles);
-                            connection.query('SELECT * FROM role WHERE title = ?', [roles], function (err, res) {
+                            connection.query("SELECT * FROM role WHERE title = ?", [roles], function (err, res) {
                                 if (err) throw err;
                                 let roleId = res[0].id;
                                 let query = 'UPDATE employee SET role_id = ? WHERE last_name = ?';
@@ -330,7 +330,7 @@ let updateRole = () => {
                                 console.log(values);
                                 connection.query(query, values,
                                     function (err, res, fields) {
-                                        console.log(`You have uodates ${name}'s role to ${roles}.`)
+                                        console.log(`You have updated ${name}'s role to ${roles}.`)
                                     })
                                 viewEmployees();
                             })

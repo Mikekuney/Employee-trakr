@@ -4,7 +4,9 @@
   "description": "an application for being able to track your employees with using node, inquirer, and mysql.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seeds": "node seeds/index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/Mikekuney/Employee-trakr#readme",
   "dependencies": {
     "console.table": "^0.10.0",
+    "dotenv": "^16.0.1",
     "inquirer": "^8.2.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",

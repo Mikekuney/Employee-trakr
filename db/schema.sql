@@ -1,20 +1,16 @@
-DROP DATABASE IF EXISTS ETS_db;
 
-CREATE DATABASE ETS_db;
 
-USE ETS_db;
-
-CREATE TABLE departments (
+CREATE TABLE department (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dep_names VARCHAR(30) NOT NULL
-):
+);
 
 CREATE TABLE roles (
     r_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(8, 2) NOT NULL,
     department_id INT,
-    CONSTRAINT fk_deparment FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
+        CONSTRAINT fk_deparment FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
 );
 
 CREATE TABLE employee (
@@ -27,7 +23,7 @@ CREATE TABLE employee (
         CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(emp_id) ON DELETE SET NULL
 );
 
-SELECT*FROM departments;
+SELECT*FROM department;
 
 SELECT*FROM roles;
 
