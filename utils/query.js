@@ -8,37 +8,38 @@ const res = require("express/lib/response");
 
 // Add new Departments
 async function addDepartments() {
-    await inquirer.prompt([
-        {
-            type: "input",
-            name: "departments_name",
-            message: "What is the name of the new department?",
-            validate: (nameInput) => {
-                if (nameInput) {
-                    return true;
-                } else {
-                    console.log("Please enter the name of the new department.");
-                    return false;
+    await inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "departments_name",
+                message: "What is the name of the new department?",
+                validate: (nameInput) => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log("Please enter the name of the new department.");
+                        return false;
+                    }
+                },
+            },
+        ])
+        .then((answers) => {
+            let departments = `INSERT INTO departments(departments_name) VALUES (?)`;
+            connection.query(
+                departments,
+                [answers.departments_name],
+                (err, results) => {
+                    if (err) throw err;
+                    console.log("New department (",answers.departments_name,") has been added to the database.");
                 }
-            }
-        }
-    ])
-    .then((answers) => {
-        let departments = `INSERT INTO departments(departments_name) VALUES(?)`;
-        connection.query(
-            departments,
-            [answers.departments_name],
-            (err, results) => {
-                if (err) throw err;
-                console.log("New department (",answers.departments_name,") has been added to the database.");
-            }
-        );
-    });
+            );
+        });
 }
 
 // Add a new role to the database
 async function addRoles() {
-    let getDepts = `SELECT * FROM departments`;
+    let getDepts = `SELECT departmentsId As value, departments_name As name FROM departments`;
     return connection
         .promise()
         .query(getDepts)

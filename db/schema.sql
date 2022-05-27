@@ -16,18 +16,14 @@ CREATE TABLE roles (
 );
 
 CREATE TABLE employees (
-    employeesId INT AUTO_INCREMENT PRIMARY KEY,
+    employeesId INT AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     rolesId INT NOT NULL,
-        FOREIGN KEY (rolesId) REFERENCES roles(rolesid)
-    managerId INT,
-        FOREIGN KEY (managerId) REFERENCES employees(employeesId)
+    managerId INTEGER NULL,
+    PRIMARY KEY (employeesId),
+    FOREIGN KEY (rolesId) REFERENCES roles(rolesId),
+    FOREIGN KEY (managerId) REFERENCES employees(employeesId)
 );
 
-SELECT*FROM departments;
-
-SELECT*FROM roles;
-
-SELECT*FROM employees;
 

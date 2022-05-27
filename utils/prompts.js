@@ -12,19 +12,19 @@ async function initialPrompts() {
             name: 'firstChoice',
             message: 'What would you like to do?',
             choices: [
-                'View all employees',
-                'View all departments',
-                'View all roles',
-                'Add an employee',
-                'Add a department',
-                'Add a role',
-                'Update an employee role',
+                'View all Employees',
+                'View all Departments',
+                'View all Roles',
+                'Add an Employee',
+                'Add a Department',
+                'Add a Role',
+                'Update an Employee Role',
                 'Exit'
             ]
         }
     ])
     .then((name) => {
-        const val = Obj.values(name).toString();
+        const val = Object.values(name).toString();
         // Switch statement to handle the user's choice
         switch (val) {
             case "View all Departments":
@@ -32,7 +32,7 @@ async function initialPrompts() {
                 connection.query(departments, (err, res, fields) => {
                     if (err) throw err;
                     console.table = cTable.getTable(res);
-                    console.log(table);
+                    console.log(cTable);
                     initialPrompts();
                 });
                 break;
@@ -41,7 +41,7 @@ async function initialPrompts() {
                 connection.query(roles, (err, res, fields) => {
                     if (err) throw err;
                     console.table = cTable.getTable(res);
-                    console.log(table);
+                    console.log(cTable);
                     initialPrompts();
                 });
                 break;
@@ -50,7 +50,7 @@ async function initialPrompts() {
                 connection.query(employees, (err, res, fields) => {
                     if (err) throw err;
                     console.table = cTable.getTable(res);
-                    console.log(table);
+                    console.log(cTable);
                     initialPrompts();
                 });
                 break;
@@ -70,16 +70,17 @@ async function initialPrompts() {
                 });
                 break;
             case "Update an Employee Role":
-                insert.updateEmployees().then(async () => {
+                insert.updateEmployee().then(async () => {
                     await initialPrompts();
                 });
                 break;
             case "Exit":
                 console.log('Goodbye!');
-                connection.end();
                 break;
+            
             default:
                 console.log('Please select a valid option.');
+                break;
         }
     });
 }

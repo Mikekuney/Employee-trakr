@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS ETS_db;
+DROP DATABASE IF EXISTS employee_trakr;
 
-CREATE DATABASE ETS_db;
+CREATE DATABASE employee_trakr;
 
-USE ETS_db;
+USE employee_trakr;
