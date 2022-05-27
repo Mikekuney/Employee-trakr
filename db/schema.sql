@@ -1,31 +1,33 @@
+DROP TABLE IF EXISTS departments;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS employees;
 
-
-CREATE TABLE department (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    dep_names VARCHAR(30) NOT NULL
+CREATE TABLE departments(
+    departmentsId INT AUTO_INCREMENT PRIMARY KEY,
+    departments_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE roles (
-    r_id INT AUTO_INCREMENT PRIMARY KEY,
+    rolesid INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(8, 2) NOT NULL,
-    department_id INT,
-        CONSTRAINT fk_deparment FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
+    departmentId INT NOT NULL,
+        FOREIGN KEY (departmentId) REFERENCES departments(departmentsId)
 );
 
-CREATE TABLE employee (
-    emp_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE employees (
+    employeesId INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    roles_id INT NOT NULL,
-        CONSTRAINT fk_role FOREIGN KEY (roles_id) REFERENCES roles(r_id) ON DELETE CASCADE,
-    manager_id INT,
-        CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(emp_id) ON DELETE SET NULL
+    rolesId INT NOT NULL,
+        FOREIGN KEY (rolesId) REFERENCES roles(rolesid)
+    managerId INT,
+        FOREIGN KEY (managerId) REFERENCES employees(employeesId)
 );
 
-SELECT*FROM department;
+SELECT*FROM departments;
 
 SELECT*FROM roles;
 
-SELECT*FROM employee;
+SELECT*FROM employees;
 
