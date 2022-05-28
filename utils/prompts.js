@@ -31,8 +31,8 @@ async function initialPrompts() {
                 let departments = `SELECT * FROM departments`;
                 connection.query(departments, (err, res, fields) => {
                     if (err) throw err;
-                    console.table = cTable.getTable(res);
-                    console.log(cTable);
+                    const table = cTable.getTable(res);
+                    console.log(table);
                     initialPrompts();
                 });
                 break;
@@ -40,8 +40,8 @@ async function initialPrompts() {
                 let roles = `SELECT * FROM roles`;
                 connection.query(roles, (err, res, fields) => {
                     if (err) throw err;
-                    console.table = cTable.getTable(res);
-                    console.log(cTable);
+                    const table = cTable.getTable(res);
+                    console.log(table);
                     initialPrompts();
                 });
                 break;
@@ -49,8 +49,8 @@ async function initialPrompts() {
                 let employees = `SELECT * FROM employees`;
                 connection.query(employees, (err, res, fields) => {
                     if (err) throw err;
-                    console.table = cTable.getTable(res);
-                    console.log(cTable);
+                    const table = cTable.getTable(res);
+                    console.log(table);
                     initialPrompts();
                 });
                 break;

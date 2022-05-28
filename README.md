@@ -6,7 +6,7 @@
 A command line app that allows the user to view, add, and delete employees, role, and departments from prompts on the command line
 
 ## **Walk-through Video Link**
- 
+<iframe src="https://drive.google.com/file/d/1XLRpdYCPATlgwD-_457DwtYD3eFZ6wzO/preview" width="640" height="480"></iframe> 
 
 ## **Table of Contents**
 <a href="#installation">Installation</a> 

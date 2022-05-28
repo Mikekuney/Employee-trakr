@@ -171,7 +171,7 @@ async function addEmployees() {
                             },
                         ])
                         .then((answers) => {
-                            let addNewEmployee = `INSERT INTO employees(first_name, last_name, rolesId, managersId) VALUES(?, ?, ?, ?)`;
+                            let addNewEmployee = "INSERT INTO employees(first_name, last_name, rolesId, managerId) VALUES(?, ?, ?, ?)";
                             connection.query(
                                 addNewEmployee,
                                 [
@@ -231,7 +231,7 @@ async function updateEmployee() {
                             },
                         ])
                         .then((answers) => {
-                            let updateEmployee = `UPDATE employees SET rolesId = ? WHERE employeesId = ?`;
+                            let updateEmployeeRole = "UPDATE employees SET rolesId = ? WHERE employeesId = ?";
                             connection.query(
                                 updateEmployeeRole,
                                 [answers.role, answers.employee],

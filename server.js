@@ -1,6 +1,6 @@
 const express = require('express');
 const cTable = require('console.table');
-const connection = require('./connection');
+const connection = require('./connection.js');
 const userPrompts = require('./utils/prompts');
 
 const app = express();
@@ -8,7 +8,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use((req,res) => {
+app.use((req, res) => {
     res.status(404).end();;
 });
 
@@ -19,5 +19,5 @@ connection.connect(async (err) => {
 });
 
 const startApp = async () => {
-    await userPrompts()
+    await userPrompts();
 };
